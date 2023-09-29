@@ -1,0 +1,60 @@
+[gd_scene load_steps=7 format=3 uid="uid://dkla67p8qe5bo"]
+
+[ext_resource type="Texture2D" uid="uid://cdkqbsn7kaedo" path="res://gem/moving_platform.png" id="1_joeai"]
+[ext_resource type="Script" path="res://Scripts/m_platfirm.gd" id="1_kpet6"]
+
+[sub_resource type="Animation" id="Animation_680m5"]
+resource_name = "Moving"
+length = 1.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.7, 1.8),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 80), Vector2(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_v4m82"]
+_data = {
+"Moving": SubResource("Animation_680m5")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_n5u02"]
+size = Vector2(62, 13)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4wid2"]
+size = Vector2(64, 12)
+
+[node name="M_platfirm" type="Node2D"]
+script = ExtResource("1_kpet6")
+
+[node name="AnimatableBody2D" type="AnimatableBody2D" parent="."]
+position = Vector2(0, 19.4315)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="AnimatableBody2D"]
+autoplay = "Moving"
+libraries = {
+"": SubResource("AnimationLibrary_v4m82")
+}
+
+[node name="Sprite2D" type="Sprite2D" parent="AnimatableBody2D"]
+position = Vector2(111, 54)
+texture = ExtResource("1_joeai")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatableBody2D"]
+position = Vector2(111, 53)
+shape = SubResource("RectangleShape2D_n5u02")
+
+[node name="Area2D" type="Area2D" parent="AnimatableBody2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatableBody2D/Area2D"]
+position = Vector2(112, 53)
+shape = SubResource("RectangleShape2D_4wid2")
+
+[connection signal="area_entered" from="AnimatableBody2D/Area2D" to="." method="_on_area_2d_area_entered"]

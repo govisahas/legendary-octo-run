@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://curhh6g5dhxwf"]
+
+[ext_resource type="Script" path="res://Scripts/Scope.gd" id="1_je2ef"]
+[ext_resource type="AudioStream" uid="uid://c14eal53w7ol5" path="res://Sounds/error_007.ogg" id="2_kb4h8"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8m0av"]
+size = Vector2(3287.5, 93.5)
+
+[node name="Scope" type="Area2D"]
+collision_mask = 2
+script = ExtResource("1_je2ef")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(1069.25, 238.25)
+shape = SubResource("RectangleShape2D_8m0av")
+
+[node name="Scope2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_kb4h8")
+autoplay = true
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

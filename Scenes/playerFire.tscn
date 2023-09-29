@@ -1,0 +1,81 @@
+[gd_scene load_steps=14 format=3 uid="uid://cgu14pahcvns5"]
+
+[ext_resource type="Script" path="res://Scripts/playerFire.gd" id="1_itrjb"]
+[ext_resource type="Texture2D" uid="uid://d1l5vc0q8on5l" path="res://Mage/Fire_Extra/fire_extra1.png" id="2_m8ses"]
+[ext_resource type="Texture2D" uid="uid://dn33u7mb05yq5" path="res://Mage/Fire_Extra/fire_extra2.png" id="3_y4kkg"]
+[ext_resource type="Texture2D" uid="uid://dhwvdbeq703w5" path="res://Mage/Fire_Extra/fire_extra3.png" id="4_lv5bl"]
+[ext_resource type="Texture2D" uid="uid://c54al50w16rxy" path="res://Mage/Fire_Extra/fire_extra4.png" id="5_jaltg"]
+[ext_resource type="Texture2D" uid="uid://c7y3bl3qr4gwt" path="res://Mage/Fire_Extra/fire_extra5.png" id="6_mykcw"]
+[ext_resource type="Texture2D" uid="uid://dhwh6javylhvd" path="res://Mage/Fire_Extra/fire_extra6.png" id="7_71gw8"]
+[ext_resource type="Texture2D" uid="uid://cf6misqaxeqea" path="res://Mage/Fire_Extra/fire_extra7.png" id="8_8amge"]
+[ext_resource type="Texture2D" uid="uid://dyei37e1arp33" path="res://Mage/Fire_Extra/fire_extra8.png" id="9_i8dga"]
+[ext_resource type="Texture2D" uid="uid://cxt0bhr403qtb" path="res://Mage/Fire_Extra/fire_extra9.png" id="10_3dcax"]
+[ext_resource type="AudioStream" uid="uid://cwdo0a2g0eogq" path="res://Sounds/shoot02wav-14562.mp3" id="11_kwqbc"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_tqwry"]
+radius = 23.0
+height = 50.0
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ldq3k"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_m8ses")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_y4kkg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_lv5bl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_jaltg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_mykcw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_71gw8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_8amge")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_i8dga")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_3dcax")
+}],
+"loop": true,
+"name": &"Fire",
+"speed": 5.0
+}]
+
+[node name="playerFire" type="Area2D" groups=["Fire"]]
+collision_layer = 8
+collision_mask = 4
+script = ExtResource("1_itrjb")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(35, 19)
+shape = SubResource("CapsuleShape2D_tqwry")
+one_way_collision = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(53, 8)
+sprite_frames = SubResource("SpriteFrames_ldq3k")
+animation = &"Fire"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+position = Vector2(44, 18)
+scale = Vector2(1.4, 2.4)
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("11_kwqbc")
+autoplay = true
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

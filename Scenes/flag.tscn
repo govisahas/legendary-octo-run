@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://bdp0d64bjnels"]
+
+[ext_resource type="Script" path="res://Level/Flag.gd" id="1_hbw6r"]
+[ext_resource type="Texture2D" uid="uid://b3um7h76s8ler" path="res://gem/lamp.png" id="2_dscqb"]
+[ext_resource type="AudioStream" uid="uid://ct8f2yg8n3eh2" path="res://Sounds/game-bonus-144751.mp3" id="3_1telr"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ymnm7"]
+size = Vector2(73, 106)
+
+[node name="Flag" type="Node2D"]
+script = ExtResource("1_hbw6r")
+
+[node name="Checkpoint" type="Sprite2D" parent="."]
+position = Vector2(2553, -263)
+scale = Vector2(1.94563, 1.84211)
+texture = ExtResource("2_dscqb")
+
+[node name="CheckpontArea" type="Area2D" parent="."]
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CheckpontArea"]
+position = Vector2(2539.5, -263)
+shape = SubResource("RectangleShape2D_ymnm7")
+
+[node name="NextLevelD" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_1telr")
+autoplay = true
+
+[connection signal="body_entered" from="CheckpontArea" to="." method="_on_checkpont_area_body_entered"]

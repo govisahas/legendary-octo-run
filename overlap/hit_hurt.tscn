@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://qk0vg0rph5ou"]
+
+[ext_resource type="PackedScene" uid="uid://da4h4uweurqfh" path="res://overlap/Hit.tscn" id="1_toxox"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_b5cfy"]
+size = Vector2(9, 9)
+
+[node name="Hit" type="CharacterBody2D"]
+
+[node name="AnimatedSprite2D" parent="." instance=ExtResource("1_toxox")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-5.5, 5.5)
+shape = SubResource("RectangleShape2D_b5cfy")

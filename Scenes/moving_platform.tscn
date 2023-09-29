@@ -1,0 +1,62 @@
+[gd_scene load_steps=7 format=3 uid="uid://d30cnkob8b1ho"]
+
+[ext_resource type="Script" path="res://Scripts/moving_platform.gd" id="1_lhklj"]
+[ext_resource type="Texture2D" uid="uid://cdkqbsn7kaedo" path="res://gem/moving_platform.png" id="2_324cd"]
+
+[sub_resource type="Animation" id="Animation_au3au"]
+resource_name = "Move"
+length = 2.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatableBody2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.1, 2.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(130, 0), Vector2(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_fa55g"]
+_data = {
+"Move": SubResource("Animation_au3au")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4qktp"]
+size = Vector2(75.5, 17)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ltrte"]
+size = Vector2(76, 15.5)
+
+[node name="MovingPlatform" type="Node2D"]
+position = Vector2(13, 11)
+script = ExtResource("1_lhklj")
+
+[node name="AnimatableBody2D" type="AnimatableBody2D" parent="."]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="AnimatableBody2D"]
+root_node = NodePath("../..")
+libraries = {
+"": SubResource("AnimationLibrary_fa55g")
+}
+
+[node name="Sprite2D" type="Sprite2D" parent="AnimatableBody2D"]
+position = Vector2(22.5, 0.999999)
+scale = Vector2(1.04545, 0.833333)
+texture = ExtResource("2_324cd")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatableBody2D"]
+position = Vector2(20.75, -1)
+shape = SubResource("RectangleShape2D_4qktp")
+
+[node name="Area2D" type="Area2D" parent="AnimatableBody2D"]
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatableBody2D/Area2D"]
+position = Vector2(21, -1.25)
+shape = SubResource("RectangleShape2D_ltrte")
+
+[connection signal="area_entered" from="AnimatableBody2D/Area2D" to="." method="_on_area_2d_area_entered"]
