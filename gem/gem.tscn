@@ -1,0 +1,110 @@
+[gd_scene load_steps=12 format=3 uid="uid://c2dkukuacm4c7"]
+
+[ext_resource type="Texture2D" uid="uid://b8k7m0ni77wdj" path="res://gem/gem-1.png" id="1_if0ud"]
+[ext_resource type="Script" path="res://Scripts/Gem.gd" id="1_pfdy6"]
+[ext_resource type="Texture2D" uid="uid://kyp308r7d2d3" path="res://gem/gem-2.png" id="2_bwk5k"]
+[ext_resource type="Texture2D" uid="uid://7rjyalexqatg" path="res://gem/gem-3.png" id="3_embih"]
+[ext_resource type="Texture2D" uid="uid://ccf7vir02vo5j" path="res://gem/gem-4.png" id="4_ppqga"]
+[ext_resource type="Texture2D" uid="uid://46y71hoqvlqe" path="res://gem/gem-5.png" id="5_jjewr"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_c7a8x"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_qab2o"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_if0ud")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_bwk5k")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_embih")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_ppqga")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_jjewr")
+}],
+"loop": true,
+"name": &"Gem",
+"speed": 5.0
+}]
+
+[sub_resource type="Animation" id="Animation_jghn0"]
+resource_name = "Gem"
+length = 0.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"Gem"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4]
+}
+
+[sub_resource type="Animation" id="Animation_ps5qe"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ksr30"]
+_data = {
+"Gem": SubResource("Animation_jghn0"),
+"RESET": SubResource("Animation_ps5qe")
+}
+
+[node name="Gem" type="Node2D"]
+script = ExtResource("1_pfdy6")
+
+[node name="GemArea" type="Area2D" parent="."]
+visible = false
+collision_layer = 16
+collision_mask = 3
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GemArea"]
+visible = false
+scale = Vector2(0.75, 0.75)
+shape = SubResource("CapsuleShape2D_c7a8x")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(1.95833, 2.28486)
+sprite_frames = SubResource("SpriteFrames_qab2o")
+animation = &"Gem"
+frame = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_ksr30")
+}
+
+[connection signal="body_entered" from="GemArea" to="." method="_on_gem_area_body_entered"]

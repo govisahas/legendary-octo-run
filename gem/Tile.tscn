@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://duy2rwh1eg0gh"]
+
+[ext_resource type="Texture2D" uid="uid://bujl3k4pxapoc" path="res://gem/decorative_obj.png" id="1_pcsf2"]
+
+[node name="Tile" type="Node2D"]
+
+[node name="DecorativeObj" type="Sprite2D" parent="."]
+position = Vector2(210, 59)
+texture = ExtResource("1_pcsf2")
